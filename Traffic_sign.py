@@ -6,7 +6,7 @@ import tensorflow as tf
 from PIL import Image
 import os
 from sklearn.model_selection import train_test_split
-from keras.utils import to_categrical
+from keras.utils import to_categorical
 from keras.models import Sequential, load_model
 from keras.layers import Conv2D, MaxPool2D, Dense, Flatten, Dropout
 
@@ -61,7 +61,7 @@ model.add(Dense(43, activation='softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 epochs = 15
 history = model.fit(X_train, y_train, batch_size=32, epochs=epochs, validation_data=(X_test, y_test))
-model.save("my_model.h5")
+model.save("traffic_classifier.h5")
 
 
 #Vizualizimi i grafikoneve per saktesine e modelit bazuar ne te dhenat per trajnim dhe testim
