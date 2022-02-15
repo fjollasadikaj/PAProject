@@ -63,3 +63,44 @@ epochs = 15
 history = model.fit(X_train, y_train, batch_size=32, epochs=epochs, validation_data=(X_test, y_test))
 model.save("my_model.h5")
 
+
+#Vizualizimi i grafikoneve per saktesine e modelit bazuar ne te dhenat per trajnim dhe testim
+
+plt.figure(0)
+plt.plot(history['accurancy'], label='training accurancy')
+plt.plot(history['val_accurancy'], label='val_accurancy')
+plt.title('Accurancy-Saktësia')
+plt.xlabel('epochs')
+plt.ylabel('accurancy')
+plt.legend()
+plt.show()
+
+plt.figure(1)
+plt.plot(history['loss'], label='training loss')
+plt.plot(history['val_loss'], label='val_loss')
+plt.title('Loss-Humbjet')
+plt.xlabel('epochs')
+plt.ylabel('loss')
+plt.legend()
+plt.show()
+
+#Testimi i saktesise ne dataset
+from sklearn.metrics import accurancy_score
+y_test = pd.read_csv('Test.csv')
+labels = y_test["ClassIs"].values
+imgs = y_test["Path"].values
+
+data =[]
+for img in imgs:
+    image = Image.open(img)
+    image = image.resize((30,30))
+    data.append(np.array(image))
+
+X_test = np.array(data)
+
+
+pred = model.predict_classes(X_test)
+
+from sklearn.metrics import accurancy_score
+print(accurancy_score(labels, pred))
+
